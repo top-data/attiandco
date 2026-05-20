@@ -1,0 +1,853 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --beige: #E8DDD0;
+    --tan: #C8B89A;
+    --coffee: #6B4F3A;
+    --espresso: #2C1810;
+    --matte-black: #1A1714;
+    --warm-gray: #8C7B6E;
+    --accent: #9B6B47;
+    --light-tan: #EDE5D8;
+  }
+
+  body { font-family: 'Inter', sans-serif; background: var(--warm-white); color: var(--espresso); overflow-x: hidden; }
+
+  h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 2rem;
+    background: rgba(26,23,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(200,184,154,0.2);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 1.4rem; letter-spacing: 0.05em; }
+  .nav-logo span { color: var(--tan); font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: rgba(245,240,232,0.8); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--tan); }
+  .nav-cta { background: var(--accent); color: var(--cream); border: none; padding: 0.6rem 1.4rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; }
+  .nav-cta:hover { background: var(--coffee); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--matte-black);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 80px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(107,79,58,0.35) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(155,107,71,0.2) 0%, transparent 50%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: radial-gradient(circle, var(--tan) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-content { position: relative; z-index: 2; padding: 4rem 2.5rem; max-width: 680px; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--tan); font-weight: 500; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .hero-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--tan); }
+  .hero-title { font-size: clamp(3rem, 8vw, 5rem); color: var(--cream); line-height: 1.05; margin-bottom: 1.5rem; }
+  .hero-title em { color: var(--tan); font-style: italic; display: block; }
+  .hero-sub { font-size: 1.05rem; color: rgba(245,240,232,0.65); line-height: 1.7; margin-bottom: 2.5rem; font-weight: 300; max-width: 440px; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--cream); border: none; padding: 0.9rem 2rem; border-radius: 3rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--coffee); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(107,79,58,0.4); }
+  .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(245,240,232,0.35); padding: 0.9rem 2rem; border-radius: 3rem; font-size: 0.9rem; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; transition: all 0.25s; }
+  .btn-outline:hover { border-color: var(--tan); color: var(--tan); transform: translateY(-2px); }
+  .hero-visual {
+    position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
+    width: 48%; max-width: 380px;
+  }
+  .coffee-cup-illus { width: 100%; }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 0.5px solid rgba(200,184,154,0.2); }
+  .stat-item { }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--tan); }
+  .stat-label { font-size: 0.72rem; color: rgba(245,240,232,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--espresso); margin-bottom: 1.2rem; line-height: 1.2; }
+  .section-title em { color: var(--accent); font-style: italic; }
+  .section-sub { color: var(--warm-gray); font-size: 1rem; line-height: 1.7; max-width: 480px; }
+
+  /* ABOUT */
+  .about { background: var(--cream); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 900px; margin: 0 auto; }
+  .about-visual { position: relative; }
+  .about-card {
+    background: var(--matte-black); border-radius: 20px; padding: 2.5rem;
+    color: var(--cream); position: relative; overflow: hidden;
+  }
+  .about-card-pattern {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image: radial-gradient(circle, var(--tan) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+  }
+  .about-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .about-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--tan); }
+  .about-card p { font-size: 0.9rem; line-height: 1.7; color: rgba(245,240,232,0.7); }
+  .about-badge { position: absolute; bottom: -1rem; right: -1rem; background: var(--accent); color: var(--cream); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.3; }
+  .about-content p { color: var(--warm-gray); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+  .about-features { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+  .feature-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; color: var(--espresso); font-weight: 500; }
+  .feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* SERVICES */
+  .services { background: var(--warm-white); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .service-card {
+    background: var(--cream); border-radius: 16px; padding: 1.8rem 1.5rem;
+    border: 0.5px solid var(--beige); transition: all 0.3s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before { content: ''; position: absolute; inset: 0; background: var(--matte-black); opacity: 0; transition: opacity 0.3s; border-radius: 16px; }
+  .service-card:hover::before { opacity: 1; }
+  .service-card:hover .service-icon { color: var(--tan); }
+  .service-card:hover h3 { color: var(--cream); }
+  .service-card:hover p { color: rgba(245,240,232,0.6); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,23,20,0.15); }
+  .service-icon { font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent); position: relative; z-index: 1; transition: color 0.3s; }
+  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.5rem; color: var(--espresso); position: relative; z-index: 1; transition: color 0.3s; }
+  .service-card p { font-size: 0.8rem; color: var(--warm-gray); line-height: 1.6; position: relative; z-index: 1; transition: color 0.3s; }
+
+  /* MENU */
+  .menu-section { background: var(--matte-black); padding: 5rem 2rem; }
+  .menu-section .section-title { color: var(--cream); }
+  .menu-section .section-eyebrow { color: var(--tan); }
+  .menu-section .section-sub { color: rgba(245,240,232,0.5); }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 3rem; }
+  .menu-card {
+    background: rgba(245,240,232,0.05); border: 0.5px solid rgba(200,184,154,0.15);
+    border-radius: 14px; padding: 1.5rem;
+    transition: all 0.3s; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .menu-card:hover { background: rgba(155,107,71,0.15); border-color: var(--accent); transform: translateY(-2px); }
+  .menu-card-emoji { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .menu-card h3 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 1rem; margin-bottom: 0.4rem; }
+  .menu-card p { font-size: 0.78rem; color: rgba(245,240,232,0.5); line-height: 1.5; margin-bottom: 1rem; }
+  .menu-price { font-size: 0.8rem; font-weight: 600; color: var(--tan); }
+  .menu-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; background: rgba(155,107,71,0.2); padding: 0.2rem 0.6rem; border-radius: 2rem; display: inline-block; margin-bottom: 0.5rem; }
+
+  /* GALLERY */
+  .gallery { background: var(--light-tan); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 2.5rem; }
+  .gallery-item {
+    border-radius: 12px; overflow: hidden; aspect-ratio: 1;
+    position: relative; cursor: pointer;
+    background: var(--beige);
+    transition: transform 0.3s;
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item:first-child { grid-column: span 2; aspect-ratio: 2/1; }
+  .gallery-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; background: var(--cream); flex-direction: column; gap: 0.5rem; }
+  .gallery-inner span { font-size: 0.65rem; color: var(--warm-gray); letter-spacing: 0.1em; text-transform: uppercase; }
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(26,23,20,0); transition: background 0.3s; display: flex; align-items: center; justify-content: center; }
+  .gallery-item:hover .gallery-overlay { background: rgba(26,23,20,0.3); }
+  .gallery-overlay-icon { font-size: 1.5rem; opacity: 0; transition: opacity 0.3s; }
+  .gallery-item:hover .gallery-overlay-icon { opacity: 1; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--warm-white); }
+  .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .test-card {
+    background: var(--cream); border-radius: 16px; padding: 1.8rem;
+    border: 0.5px solid var(--beige); position: relative;
+  }
+  .test-card::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--beige); position: absolute; top: -0.5rem; left: 1rem; line-height: 1; }
+  .stars { color: #D4840A; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+  .test-text { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+  .test-author { display: flex; align-items: center; gap: 0.75rem; }
+  .test-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--cream); }
+  .test-name { font-size: 0.85rem; font-weight: 600; color: var(--espresso); }
+  .test-role { font-size: 0.72rem; color: var(--warm-gray); }
+
+  /* BOOKING */
+  .booking { background: var(--cream); }
+  .booking-inner { max-width: 680px; margin: 0 auto; }
+  .booking-form { background: var(--warm-white); border-radius: 20px; padding: 2.5rem; border: 0.5px solid var(--beige); margin-top: 2.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--espresso); letter-spacing: 0.05em; text-transform: uppercase; }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--cream); border: 0.5px solid var(--beige); border-radius: 10px;
+    padding: 0.8rem 1rem; font-size: 0.9rem; color: var(--espresso); font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s; outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit { width: 100%; background: var(--matte-black); color: var(--cream); border: none; padding: 1rem; border-radius: 3rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.25s; margin-top: 0.5rem; }
+  .form-submit:hover { background: var(--coffee); transform: translateY(-2px); }
+
+  /* FAQ */
+  .faq { background: var(--light-tan); }
+  .faq-list { max-width: 640px; margin: 2.5rem auto 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .faq-item { background: var(--warm-white); border-radius: 12px; border: 0.5px solid var(--beige); overflow: hidden; }
+  .faq-q { padding: 1.2rem 1.5rem; font-weight: 600; font-size: 0.9rem; color: var(--espresso); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .faq-q:hover { color: var(--accent); }
+  .faq-a { padding: 0 1.5rem 1.2rem; font-size: 0.85rem; color: var(--warm-gray); line-height: 1.7; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-chevron { font-size: 0.8rem; color: var(--warm-gray); transition: transform 0.2s; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+  /* SOCIAL */
+  .social-section { background: var(--matte-black); padding: 4rem 2rem; text-align: center; }
+  .social-section .section-title { color: var(--cream); margin-bottom: 0.5rem; }
+  .social-section .section-sub { color: rgba(245,240,232,0.5); margin: 0 auto 2rem; text-align: center; }
+  .social-icons { display: flex; justify-content: center; gap: 1rem; }
+  .social-icon { width: 52px; height: 52px; border-radius: 50%; border: 0.5px solid rgba(200,184,154,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--tan); cursor: pointer; transition: all 0.25s; }
+  .social-icon:hover { background: var(--accent); border-color: var(--accent); color: var(--cream); transform: translateY(-2px); }
+  .social-handle { font-size: 0.75rem; color: rgba(245,240,232,0.4); margin-top: 1.5rem; letter-spacing: 0.15em; }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--accent); padding: 3rem 2rem; text-align: center; }
+  .newsletter h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 0.5rem; }
+  .newsletter p { color: rgba(245,240,232,0.75); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .newsletter-form { display: flex; gap: 0.75rem; max-width: 400px; margin: 0 auto; }
+  .newsletter-form input { flex: 1; padding: 0.85rem 1.2rem; border-radius: 3rem; border: none; background: rgba(245,240,232,0.15); color: var(--cream); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; }
+  .newsletter-form input::placeholder { color: rgba(245,240,232,0.5); }
+  .newsletter-form button { background: var(--cream); color: var(--accent); border: none; padding: 0.85rem 1.5rem; border-radius: 3rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .newsletter-form button:hover { background: var(--espresso); color: var(--cream); }
+
+  /* FOOTER */
+  footer { background: var(--espresso); padding: 3.5rem 2rem 1.5rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+  .footer-brand { }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 0.75rem; }
+  .footer-logo span { color: var(--tan); font-style: italic; }
+  .footer-tagline { font-size: 0.8rem; color: rgba(245,240,232,0.45); line-height: 1.6; margin-bottom: 1rem; }
+  .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--tan); font-weight: 600; margin-bottom: 1rem; }
+  .footer-col a, .footer-col p { display: block; font-size: 0.82rem; color: rgba(245,240,232,0.5); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; line-height: 1.5; }
+  .footer-col a:hover { color: var(--tan); }
+  .footer-bottom { border-top: 0.5px solid rgba(200,184,154,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 0.75rem; color: rgba(245,240,232,0.3); }
+  .footer-socials { display: flex; gap: 0.75rem; }
+  .footer-social { width: 32px; height: 32px; border-radius: 50%; border: 0.5px solid rgba(200,184,154,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: rgba(245,240,232,0.4); cursor: pointer; transition: all 0.2s; }
+  .footer-social:hover { border-color: var(--tan); color: var(--tan); }
+
+  /* FLOATING BUTTON */
+  .float-btn {
+    position: fixed; bottom: 2rem; right: 1.5rem; z-index: 200;
+    background: var(--accent); color: var(--cream);
+    border: none; border-radius: 3rem; padding: 0.85rem 1.5rem;
+    font-size: 0.82rem; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; gap: 0.5rem;
+    box-shadow: 0 8px 24px rgba(107,79,58,0.4);
+    transition: all 0.25s; letter-spacing: 0.05em;
+  }
+  .float-btn:hover { background: var(--coffee); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(107,79,58,0.5); }
+
+  /* DIVIDER */
+  .marquee-strip { background: var(--accent); padding: 1rem 0; overflow: hidden; display: flex; }
+  .marquee-inner { display: flex; gap: 3rem; white-space: nowrap; animation: marquee 20s linear infinite; }
+  .marquee-item { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); font-weight: 600; display: flex; align-items: center; gap: 1rem; }
+  .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(245,240,232,0.5); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* MAP placeholder */
+  .map-placeholder { background: var(--beige); border-radius: 14px; height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; border: 0.5px solid var(--tan); }
+  .map-placeholder span { font-size: 0.8rem; color: var(--warm-gray); }
+  .map-pin { font-size: 2rem; }
+
+  /* UTILITY */
+  .text-center { text-align: center; }
+  .text-center .section-sub { margin: 0 auto; }
+
+  @media (max-width: 600px) {
+    .about-grid, .footer-grid, .form-row { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    nav .nav-links { display: none; }
+    .gallery-item:first-child { grid-column: span 1; aspect-ratio: 1; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .newsletter-form { flex-direction: column; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<h2 class="sr-only">Atti & Co — Mobile Coffee Van Website</h2>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Atti <span>& Co</span></div>
+  <div class="nav-links">
+    <a href="#about" onclick="scroll('about')">About</a>
+    <a href="#services" onclick="scroll('services')">Services</a>
+    <a href="#menu" onclick="scroll('menu')">Menu</a>
+    <a href="#booking" onclick="scroll('booking')">Book</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book the Van</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Specialty Coffee · Melbourne</div>
+    <h1 class="hero-title">
+      Crafted Coffee,<em>Anywhere.</em>
+    </h1>
+    <p class="hero-sub">Mobile coffee experiences for every event — from intimate weddings to large-scale festivals. Exceptional quality, wherever you are.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">☕ Book the Van</button>
+      <button class="btn-outline" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">View Menu</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Events served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average rating</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Specialty beans</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <svg class="coffee-cup-illus" viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="steamGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#C8B89A" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#C8B89A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Saucer -->
+      <ellipse cx="160" cy="360" rx="110" ry="18" fill="#3D2820" opacity="0.7"/>
+      <ellipse cx="160" cy="352" rx="120" ry="22" fill="#2C1810"/>
+      <ellipse cx="160" cy="347" rx="118" ry="20" fill="#3D2820"/>
+      <!-- Cup body -->
+      <path d="M80 200 Q75 300 90 340 Q120 360 160 360 Q200 360 230 340 Q245 300 240 200 Z" fill="#2C1810"/>
+      <path d="M82 205 Q77 300 92 338 Q122 356 160 356 Q198 356 228 338 Q243 300 238 205 Z" fill="#3D2820"/>
+      <!-- Cup inner top -->
+      <ellipse cx="160" cy="200" rx="80" ry="20" fill="#1A1714"/>
+      <!-- Latte art -->
+      <ellipse cx="160" cy="200" rx="72" ry="17" fill="#6B4F3A"/>
+      <path d="M130 195 Q145 185 160 195 Q175 205 190 195" stroke="#C8B89A" stroke-width="2.5" fill="none" opacity="0.6"/>
+      <path d="M120 200 Q140 188 160 200 Q180 212 200 200" stroke="#C8B89A" stroke-width="2" fill="none" opacity="0.4"/>
+      <ellipse cx="160" cy="198" rx="18" ry="8" fill="#9B6B47" opacity="0.6"/>
+      <path d="M148 196 Q155 192 163 196 Q156 200 148 196" fill="#C8B89A" opacity="0.4"/>
+      <!-- Handle -->
+      <path d="M238 235 Q275 235 278 270 Q281 305 238 310" stroke="#3D2820" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <path d="M238 237 Q272 237 275 270 Q278 303 238 308" stroke="#2C1810" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <!-- Steam lines -->
+      <path d="M140 175 Q135 155 140 135 Q145 115 140 95" stroke="#C8B89A" stroke-width="1.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+      <path d="M160 170 Q155 148 160 125 Q165 102 160 80" stroke="#C8B89A" stroke-width="1.5" fill="none" opacity="0.25" stroke-linecap="round"/>
+      <path d="M180 175 Q185 155 180 135 Q175 115 180 95" stroke="#C8B89A" stroke-width="1.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+      <!-- Decorative dots -->
+      <circle cx="60" cy="280" r="3" fill="#C8B89A" opacity="0.15"/>
+      <circle cx="270" cy="230" r="2" fill="#C8B89A" opacity="0.1"/>
+      <circle cx="50" cy="180" r="4" fill="#9B6B47" opacity="0.1"/>
+      <circle cx="280" cy="320" r="2.5" fill="#C8B89A" opacity="0.12"/>
+    </svg>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Specialty Coffee <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Corporate Events <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Weddings <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Markets & Festivals <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Private Functions <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Community Events <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Locally Sourced <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Specialty Coffee <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Corporate Events <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Weddings <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Markets & Festivals <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Private Functions <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Community Events <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Locally Sourced <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-card-pattern"></div>
+        <div class="about-card-icon" aria-hidden="true">☕</div>
+        <h3>Our Philosophy</h3>
+        <p>Every cup is an opportunity to create a moment. We source single-origin beans from ethical farms and craft each drink with care — because great coffee changes how a day feels.</p>
+        <div class="about-badge">Est.<br>2019</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title">Born from a love of <em>great coffee.</em></h2>
+      <p>Atti & Co started with a simple belief: that the best coffee experiences shouldn't be confined to four walls. We took our passion for specialty coffee, loaded it into a beautifully fitted van, and brought it to the people.</p>
+      <p>From our very first market stall to now serving hundreds of events each year, we've stayed true to what matters — exceptional coffee, genuine hospitality, and that warm feeling of a perfect cup shared with good company.</p>
+      <p>We partner with local roasters, use sustainably sourced milk and ingredients, and train every barista to the highest standard. Whether you're hosting fifty guests or five thousand, we show up ready to impress.</p>
+      <div class="about-features">
+        <div class="feature-item"><span class="feature-dot"></span>Single-origin specialty beans</div>
+        <div class="feature-item"><span class="feature-dot"></span>Locally sourced, sustainably produced</div>
+        <div class="feature-item"><span class="feature-dot"></span>Fully equipped professional setup</div>
+        <div class="feature-item"><span class="feature-dot"></span>Experienced, passionate baristas</div>
+        <div class="feature-item"><span class="feature-dot"></span>Fully insured and compliant</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="text-center">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Coffee for every <em>occasion.</em></h2>
+    <p class="section-sub">From boardroom mornings to wedding receptions — we bring specialty coffee to wherever you need it most.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🏢</div>
+      <h3>Corporate Catering</h3>
+      <p>Elevate your office events, team meetings, and client days with barista-grade coffee that keeps everyone energised and impressed.</p>
+    </div>
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">💍</div>
+      <h3>Weddings</h3>
+      <p>Add a unique, Instagram-worthy coffee experience to your special day. We work seamlessly with your event team for a flawless service.</p>
+    </div>
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🎪</div>
+      <h3>Festivals & Markets</h3>
+      <p>High-volume, fast-paced, consistently brilliant. We're built for the energy of markets and festivals — and we thrive in it.</p>
+    </div>
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🎉</div>
+      <h3>Private Events</h3>
+      <p>Birthdays, anniversaries, baby showers — any gathering becomes a little more special with a dedicated coffee experience.</p>
+    </div>
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">✨</div>
+      <h3>Pop-Up Coffee Bar</h3>
+      <p>Brand activations, retail pop-ups, and community events — our van is a visual centrepiece that draws a crowd and keeps them coming back.</p>
+    </div>
+    <div class="service-card" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🤝</div>
+      <h3>Community Events</h3>
+      <p>Neighbourhood gatherings, fundraisers, and local celebrations — we love being part of the community and giving back through great coffee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="text-center">
+    <div class="section-eyebrow">The Menu</div>
+    <h2 class="section-title">Crafted with <em>intention.</em></h2>
+    <p class="section-sub">Every drink, made fresh. Every ingredient, chosen carefully. Every cup, worth the wait.</p>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">☕</div>
+      <div class="menu-tag">Signature</div>
+      <h3>Flat White</h3>
+      <p>Silky microfoam over a double ristretto. Our most ordered drink.</p>
+      <div class="menu-price">From $5.50</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🫧</div>
+      <div class="menu-tag">Classic</div>
+      <h3>Cappuccino</h3>
+      <p>Balanced espresso, steamed milk, and a generous cap of foam.</p>
+      <div class="menu-price">From $5.50</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🥛</div>
+      <div class="menu-tag">Classic</div>
+      <h3>Latte</h3>
+      <p>Smooth, creamy, and comforting. A classic done perfectly.</p>
+      <div class="menu-price">From $5.50</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">⚡</div>
+      <div class="menu-tag">Bold</div>
+      <h3>Espresso</h3>
+      <p>Single or double shot. Intense, aromatic, unapologetic.</p>
+      <div class="menu-price">From $4.00</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🍫</div>
+      <div class="menu-tag">Indulgent</div>
+      <h3>Mocha</h3>
+      <p>House-made chocolate blended with our signature espresso blend.</p>
+      <div class="menu-price">From $6.00</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🍵</div>
+      <div class="menu-tag">Non-coffee</div>
+      <h3>Matcha Latte</h3>
+      <p>Ceremonial grade matcha, steamed oat milk, touch of honey.</p>
+      <div class="menu-price">From $6.50</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🧊</div>
+      <div class="menu-tag">Seasonal</div>
+      <h3>Iced Coffee</h3>
+      <p>Cold brew poured over ice with your choice of milk. Refreshing.</p>
+      <div class="menu-price">From $6.50</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-emoji" aria-hidden="true">🥐</div>
+      <div class="menu-tag">Bites</div>
+      <h3>Pastries & Snacks</h3>
+      <p>Locally baked treats that pair perfectly with your coffee order.</p>
+      <div class="menu-price">From $4.50</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:2.5rem;">
+    <p style="font-size:0.8rem; color:rgba(245,240,232,0.4); letter-spacing:0.05em;">Dairy-free, decaf, and alternative milk options always available · Prices vary by event</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="text-center">
+    <div class="section-eyebrow">Gallery</div>
+    <h2 class="section-title">Made to be <em>shared.</em></h2>
+    <p class="section-sub">A glimpse into our world — from first light espresso pulls to golden-hour events.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item" tabindex="0" aria-label="Featured event setup">
+      <div class="gallery-inner" style="background: linear-gradient(135deg, #3D2820, #6B4F3A); color: var(--tan); font-size:3rem;">
+        ☕
+        <span style="color:rgba(200,184,154,0.6)">Event setup</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-overlay-icon" aria-hidden="true">🔍</span></div>
+    </div>
+    <div class="gallery-item" tabindex="0" aria-label="Latte art">
+      <div class="gallery-inner" style="background: #2C1810;">
+        <span style="font-size:2rem; color:var(--tan)">🌿</span>
+        <span style="color:rgba(200,184,154,0.5); font-size:0.6rem;">Latte art</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-overlay-icon" aria-hidden="true">🔍</span></div>
+    </div>
+    <div class="gallery-item" tabindex="0" aria-label="Our van">
+      <div class="gallery-inner" style="background: #E8DDD0;">
+        <span style="font-size:2rem;">🚐</span>
+        <span style="color:var(--warm-gray); font-size:0.6rem;">The van</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-overlay-icon" aria-hidden="true">🔍</span></div>
+    </div>
+    <div class="gallery-item" tabindex="0" aria-label="Wedding service">
+      <div class="gallery-inner" style="background: #F5F0E8;">
+        <span style="font-size:2rem;">💍</span>
+        <span style="color:var(--warm-gray); font-size:0.6rem;">Wedding day</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-overlay-icon" aria-hidden="true">🔍</span></div>
+    </div>
+    <div class="gallery-item" tabindex="0" aria-label="Festival crowd">
+      <div class="gallery-inner" style="background: #9B6B47;">
+        <span style="font-size:2rem; color:var(--cream)">🎪</span>
+        <span style="color:rgba(245,240,232,0.6); font-size:0.6rem;">Festival</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-overlay-icon" aria-hidden="true">🔍</span></div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:1.5rem;">
+    <p style="font-size:0.78rem; color:var(--warm-gray); letter-spacing:0.1em;">Follow us <strong style="color:var(--accent)">@attiandco</strong> for daily coffee content</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="text-center">
+    <div class="section-eyebrow">Kind Words</div>
+    <h2 class="section-title">Loved by <em>every crowd.</em></h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p class="test-text">Atti & Co was the highlight of our corporate conference. The coffee was extraordinary and the team were so professional and warm. We've already booked them for next quarter.</p>
+      <div class="test-author">
+        <div class="test-avatar" aria-hidden="true">SR</div>
+        <div>
+          <div class="test-name">Sarah R.</div>
+          <div class="test-role">Events Manager, Deloitte</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p class="test-text">We had Atti & Co at our wedding and our guests could not stop talking about it. The van looked stunning and the coffee was genuinely the best I've had in years.</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: var(--tan);" aria-hidden="true">JM</div>
+        <div>
+          <div class="test-name">James & Mia</div>
+          <div class="test-role">Wedding clients, 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p class="test-text">Booked them for our Sunday market and they were absolutely incredible. The queue at their van never dropped below 20 people. They're our permanent fixture now!</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: var(--coffee);" aria-hidden="true">KL</div>
+        <div>
+          <div class="test-name">Kate L.</div>
+          <div class="test-role">Market organiser</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="text-center">
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="section-title">Let's bring great coffee<br><em>to your event.</em></h2>
+      <p class="section-sub" style="margin: 0 auto;">Tell us about your event and we'll get back to you within 24 hours with availability and a custom quote.</p>
+    </div>
+    <div class="booking-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-name">Full Name</label>
+          <input id="f-name" type="text" placeholder="Your name" aria-label="Full name"/>
+        </div>
+        <div class="form-group">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" placeholder="you@email.com" aria-label="Email address"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-phone">Phone</label>
+          <input id="f-phone" type="tel" placeholder="+61 4XX XXX XXX" aria-label="Phone number"/>
+        </div>
+        <div class="form-group">
+          <label for="f-type">Event Type</label>
+          <select id="f-type" aria-label="Event type">
+            <option value="">Select event type…</option>
+            <option>Corporate Event</option>
+            <option>Wedding</option>
+            <option>Festival / Market</option>
+            <option>Private Function</option>
+            <option>Pop-Up / Brand Activation</option>
+            <option>Community Event</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-date">Event Date</label>
+          <input id="f-date" type="date" aria-label="Event date"/>
+        </div>
+        <div class="form-group">
+          <label for="f-guests">Number of Guests</label>
+          <select id="f-guests" aria-label="Number of guests">
+            <option value="">Approx. guest count…</option>
+            <option>Under 50</option>
+            <option>50–100</option>
+            <option>100–200</option>
+            <option>200–500</option>
+            <option>500+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="f-location">Event Location / Suburb</label>
+        <input id="f-location" type="text" placeholder="e.g. South Yarra, Melbourne" aria-label="Event location"/>
+      </div>
+      <div class="form-group">
+        <label for="f-msg">Tell us more</label>
+        <textarea id="f-msg" placeholder="Any extra details about your event, timing, special requirements…" aria-label="Additional message"></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">☕ Send Enquiry</button>
+    </div>
+
+    <div class="map-placeholder" aria-label="Service area map">
+      <span class="map-pin" aria-hidden="true">📍</span>
+      <span style="font-weight:600; color:var(--espresso);">Based in Melbourne, serving all of Victoria</span>
+      <span>Interstate bookings welcome — contact us to discuss</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="text-center">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-title">Good questions, <em>honest answers.</em></h2>
+  </div>
+  <div class="faq-list" role="list">
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFaq(this)" tabindex="0" aria-expanded="false">
+        How far in advance should I book?
+        <span class="faq-chevron" aria-hidden="true">▾</span>
+      </div>
+      <div class="faq-a">We recommend booking at least 4–6 weeks ahead for corporate events and 3–6 months for weddings. That said, we do take last-minute bookings depending on availability — don't hesitate to reach out!</div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFaq(this)" tabindex="0" aria-expanded="false">
+        What's included in a booking?
+        <span class="faq-chevron" aria-hidden="true">▾</span>
+      </div>
+      <div class="faq-a">Every booking includes our fully equipped coffee van, experienced barista(s), all coffee equipment, specialty beans, milk, and consumables (cups, lids, stirrers). We handle setup and pack-down so you don't have to.</div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFaq(this)" tabindex="0" aria-expanded="false">
+        Do you cater for non-coffee drinkers?
+        <span class="faq-chevron" aria-hidden="true">▾</span>
+      </div>
+      <div class="faq-a">Absolutely! We offer a range of non-coffee options including matcha lattes, hot chocolate, chai, and various cold drinks. We can also accommodate all dietary requirements including dairy-free alternatives.</div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFaq(this)" tabindex="0" aria-expanded="false">
+        How much space does the van need?
+        <span class="faq-chevron" aria-hidden="true">▾</span>
+      </div>
+      <div class="faq-a">Our van requires approximately 6m × 3m of flat, accessible space. We'll discuss the specifics of your venue during the booking process to make sure everything runs smoothly on the day.</div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFaq(this)" tabindex="0" aria-expanded="false">
+        Do you travel outside Melbourne?
+        <span class="faq-chevron" aria-hidden="true">▾</span>
+      </div>
+      <div class="faq-a">Yes! We service all of Victoria and can travel interstate for large events. Travel fees may apply depending on distance. Contact us and we'll work something out.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="social-section" id="social">
+  <div class="section-eyebrow" style="color:var(--tan); text-align:center; display:block; margin-bottom:1rem;">Stay Connected</div>
+  <h2 class="section-title">Follow the <em style="color:var(--tan);">journey.</em></h2>
+  <p class="section-sub">Behind-the-scenes, latte art, event highlights and more.</p>
+  <div class="social-icons">
+    <div class="social-icon" title="Instagram" tabindex="0" aria-label="Follow us on Instagram">
+      <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+    </div>
+    <div class="social-icon" title="TikTok" tabindex="0" aria-label="Follow us on TikTok">
+      <i class="ti ti-brand-tiktok" aria-hidden="true"></i>
+    </div>
+    <div class="social-icon" title="Facebook" tabindex="0" aria-label="Follow us on Facebook">
+      <i class="ti ti-brand-facebook" aria-hidden="true"></i>
+    </div>
+    <div class="social-icon" title="Email" tabindex="0" aria-label="Email us">
+      <i class="ti ti-mail" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="social-handle">@attiandco · #AttiAndCo · #MobileCoffee</div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h3>Stay in the loop</h3>
+  <p>Market dates, seasonal specials, and coffee stories — delivered monthly.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="Your email address" id="nl-email" aria-label="Newsletter email"/>
+    <button onclick="handleNewsletter()" aria-label="Subscribe to newsletter">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Atti <span>& Co</span></div>
+      <p class="footer-tagline">Specialty coffee, wherever you need it. Serving Melbourne and Victoria since 2019.</p>
+      <p style="font-size:0.78rem; color:rgba(245,240,232,0.35); margin-top:0.5rem;">☕ Made with love & caffeine</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#about">About us</a>
+      <a href="#services">Services</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>hello@attiandco.com.au</p>
+      <p>0412 XXX XXX</p>
+      <p>Melbourne, VIC</p>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <p>Mon–Fri: 7am – 4pm</p>
+      <p>Sat–Sun: 8am – 3pm</p>
+      <p style="margin-top:0.5rem; font-style:italic; opacity:0.6; font-size:0.75rem;">By appointment for events</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Atti & Co. All rights reserved.</p>
+    <div class="footer-socials" aria-label="Social media links">
+      <div class="footer-social" tabindex="0" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
+      <div class="footer-social" tabindex="0" aria-label="TikTok"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></div>
+      <div class="footer-social" tabindex="0" aria-label="Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTON -->
+<button class="float-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" aria-label="Book the van">
+  <i class="ti ti-calendar" aria-hidden="true"></i> Book Now
+</button>
+
+<script>
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      el.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(q); } });
+  });
+
+  function handleSubmit() {
+    const name = document.getElementById('f-name').value;
+    const email = document.getElementById('f-email').value;
+    if (!name || !email) {
+      alert('Please fill in at least your name and email to send an enquiry.');
+      return;
+    }
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = '✓ Enquiry sent! We\'ll be in touch within 24 hours.';
+    btn.style.background = '#3D6B3A';
+    btn.disabled = true;
+  }
+
+  function handleNewsletter() {
+    const email = document.getElementById('nl-email').value;
+    if (!email) return;
+    const btn = document.querySelector('.newsletter-form button');
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = '#3D6B3A';
+    btn.style.color = '#fff';
+    btn.disabled = true;
+  }
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {}, { passive: true });
+</script>
