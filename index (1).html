@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atti & Co — Specialty Coffee on Wheels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE6D6;
+    --espresso: #1A1108;
+    --roast: #3D2A10;
+    --caramel: #C17D3C;
+    --caramel-light: #DFA96A;
+    --steam: #F9F6F0;
+    --text-body: #4A3520;
+    --text-muted: #8B7355;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: transparent;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(245, 240, 232, 0.88);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--espresso);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--roast);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--caramel); }
+  .nav-cta {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--espresso);
+    border: none;
+    padding: 0.65rem 1.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--roast); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 6rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--espresso);
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--caramel);
+  }
+  .hero-sub {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-body);
+    max-width: 400px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 1rem 2.4rem;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--roast); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--text-body);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { gap: 0.8rem; color: var(--caramel); }
+  .btn-ghost::after { content: '→'; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    background: var(--roast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.3s forwards;
+  }
+  .hero-illustration {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Van SVG */
+  .steam-path {
+    animation: steamRise 3s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+  .steam-path:nth-child(2) { animation-delay: 0.5s; }
+  .steam-path:nth-child(3) { animation-delay: 1s; }
+
+  @keyframes steamRise {
+    0%, 100% { opacity: 0.4; transform: translateY(0) scaleX(1); }
+    50% { opacity: 0.8; transform: translateY(-8px) scaleX(0.9); }
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--caramel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: rotateBadge 20s linear infinite;
+  }
+  .hero-badge-inner {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+  @keyframes rotateBadge {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-bar {
+    background: var(--espresso);
+    color: var(--caramel-light);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 3rem;
+    animation: marqueeScroll 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .marquee-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--caramel);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+  .about-visual {
+    background: var(--cream-dark);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    overflow: hidden;
+  }
+  .about-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: radial-gradient(circle, var(--espresso) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+  }
+  .about-circle {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1.5px solid var(--caramel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .about-circle-num {
+    font-family: var(--serif);
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--caramel);
+  }
+  .about-circle-label {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+  .about-content {
+    padding: 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .section-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1.5rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--espresso);
+    margin-bottom: 2rem;
+  }
+  .section-title em { font-style: italic; color: var(--caramel); }
+  .section-body {
+    font-size: 0.98rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 2.5rem;
+  }
+  .stat-row {
+    display: flex;
+    gap: 3rem;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--caramel);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ─── MENU ─── */
+  .menu {
+    background: var(--espresso);
+    padding: 8rem 4rem;
+  }
+  .menu-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+  }
+  .menu-header .section-tag { color: var(--caramel-light); }
+  .menu-header .section-title { color: var(--cream); margin-bottom: 0; }
+  .menu-link {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--caramel-light);
+    text-decoration: none;
+    border-bottom: 1px solid var(--caramel);
+    padding-bottom: 0.2rem;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .menu-item {
+    background: var(--espresso);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    cursor: default;
+    position: relative;
+  }
+  .menu-item:hover { background: var(--roast); }
+  .menu-item-tag {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1rem;
+  }
+  .menu-item-name {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .menu-item-name em { font-style: italic; }
+  .menu-item-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(245, 240, 232, 0.55);
+    margin-bottom: 1.5rem;
+  }
+  .menu-item-price {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: var(--caramel-light);
+  }
+
+  /* ─── SERVICES ─── */
+  .services {
+    padding: 8rem 4rem;
+    background: var(--steam);
+  }
+  .services-header {
+    max-width: 600px;
+    margin-bottom: 5rem;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .service-card {
+    padding: 3rem 2.5rem;
+    border: 1px solid var(--cream-dark);
+    background: var(--cream);
+    position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--caramel);
+  }
+  .service-number {
+    font-family: var(--serif);
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--cream-dark);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .service-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--espresso);
+    margin-bottom: 1rem;
+  }
+  .service-desc {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--text-body);
+  }
+
+  /* ─── LOCATIONS ─── */
+  .locations {
+    background: var(--cream-dark);
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .location-list {
+    list-style: none;
+    margin-top: 2.5rem;
+  }
+  .location-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(61, 42, 16, 0.12);
+  }
+  .location-item:first-child { border-top: 1px solid rgba(61, 42, 16, 0.12); }
+  .location-day {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    min-width: 90px;
+    padding-top: 0.1rem;
+  }
+  .location-details { flex: 1; }
+  .location-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--espresso);
+    margin-bottom: 0.2rem;
+  }
+  .location-time {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .location-map {
+    border-radius: 0;
+    background: var(--espresso);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials {
+    padding: 8rem 4rem;
+    background: var(--cream);
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--cream-dark);
+    margin-top: 4rem;
+  }
+  .testimonial-card {
+    background: var(--cream);
+    padding: 3rem 2.5rem;
+  }
+  .testimonial-stars {
+    color: var(--caramel);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--espresso);
+    margin-bottom: 2rem;
+  }
+  .testimonial-author {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ─── BOOKING ─── */
+  .booking {
+    background: var(--roast);
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .booking .section-tag { color: var(--caramel-light); }
+  .booking .section-title { color: var(--cream); }
+  .booking-body {
+    font-size: 0.98rem;
+    line-height: 1.9;
+    color: rgba(245, 240, 232, 0.7);
+    margin-bottom: 2rem;
+  }
+  .booking-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .form-field label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--caramel-light);
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: rgba(245, 240, 232, 0.06);
+    border: 1px solid rgba(193, 125, 60, 0.3);
+    color: var(--cream);
+    padding: 0.85rem 1rem;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: rgba(245, 240, 232, 0.3); }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--caramel); }
+  .form-field select option { background: var(--roast); }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--caramel);
+    color: var(--cream);
+    border: none;
+    padding: 1.1rem 2.4rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--caramel-light); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--espresso);
+    padding: 5rem 4rem 3rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+  }
+  .footer-brand-name {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .footer-brand-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(245, 240, 232, 0.45);
+    max-width: 260px;
+  }
+  .footer-heading {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-links a {
+    font-size: 0.88rem;
+    color: rgba(245, 240, 232, 0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--caramel-light); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(245, 240, 232, 0.3);
+  }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover { color: var(--caramel-light); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MAP ILLUSTRATION ─── */
+  .map-dots circle {
+    animation: mapPulse 3s ease-in-out infinite;
+  }
+  .map-dots circle:nth-child(2) { animation-delay: 0.8s; }
+  .map-dots circle:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes mapPulse {
+    0%, 100% { opacity: 0.5; r: 4; }
+    50% { opacity: 1; r: 7; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Atti & Co</a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#locations">Find Us</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book the Van</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Specialty Coffee · Mobile Café · Est. 2021</p>
+    <h1 class="hero-title">Coffee worth<br/><em>chasing.</em></h1>
+    <p class="hero-sub">We bring the ritual to you. Specialty single-origin espresso, slow-brewed and served from our beloved van — wherever you need us most.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">See our menu</a>
+      <a href="#locations" class="btn-ghost">Find us today</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <!-- Van Illustration -->
+      <svg class="hero-illustration" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background warm glow -->
+        <ellipse cx="300" cy="500" rx="280" ry="60" fill="#2A1A08" opacity="0.6"/>
+
+        <!-- STEAM -->
+        <g class="steam-path" fill="none" stroke="#DFA96A" stroke-width="2" stroke-linecap="round" opacity="0.4">
+          <path d="M268 210 Q262 195 268 180 Q274 165 268 150"/>
+        </g>
+        <g class="steam-path" fill="none" stroke="#DFA96A" stroke-width="2" stroke-linecap="round" opacity="0.4">
+          <path d="M285 205 Q279 185 285 168 Q291 152 285 136"/>
+        </g>
+        <g class="steam-path" fill="none" stroke="#DFA96A" stroke-width="2" stroke-linecap="round" opacity="0.4">
+          <path d="M302 210 Q296 192 302 175 Q308 158 302 141"/>
+        </g>
+
+        <!-- VAN BODY -->
+        <rect x="80" y="280" width="440" height="200" rx="18" fill="#3D2A10"/>
+        <rect x="80" y="280" width="440" height="200" rx="18" fill="none" stroke="#C17D3C" stroke-width="1.5" opacity="0.3"/>
+
+        <!-- Cab -->
+        <path d="M80 350 L80 280 Q80 260 110 260 L240 260 Q270 260 285 280 L285 350 Z" fill="#2A1A08"/>
+        <rect x="88" y="268" width="185" height="70" rx="8" fill="#1A1108" opacity="0.7"/>
+
+        <!-- Windshield -->
+        <rect x="96" y="272" width="170" height="60" rx="6" fill="#DFA96A" opacity="0.15"/>
+        <rect x="96" y="272" width="170" height="60" rx="6" fill="none" stroke="#C17D3C" stroke-width="1" opacity="0.4"/>
+
+        <!-- Serving window -->
+        <rect x="200" y="295" width="160" height="100" rx="6" fill="#1A1108"/>
+        <rect x="205" y="300" width="150" height="90" rx="4" fill="#2A1A08"/>
+        <rect x="205" y="300" width="150" height="90" rx="4" fill="none" stroke="#C17D3C" stroke-width="1.5" opacity="0.6"/>
+
+        <!-- Window awning -->
+        <path d="M195 300 L365 300 L375 285 L185 285 Z" fill="#C17D3C" opacity="0.85"/>
+        <line x1="215" y1="285" x2="205" y2="300" stroke="#3D2A10" stroke-width="0.5" opacity="0.5"/>
+        <line x1="245" y1="285" x2="235" y2="300" stroke="#3D2A10" stroke-width="0.5" opacity="0.5"/>
+        <line x1="275" y1="285" x2="265" y2="300" stroke="#3D2A10" stroke-width="0.5" opacity="0.5"/>
+        <line x1="305" y1="285" x2="295" y2="300" stroke="#3D2A10" stroke-width="0.5" opacity="0.5"/>
+        <line x1="335" y1="285" x2="325" y2="300" stroke="#3D2A10" stroke-width="0.5" opacity="0.5"/>
+
+        <!-- Cup in window -->
+        <rect x="268" y="330" width="28" height="32" rx="2" fill="#C17D3C" opacity="0.8"/>
+        <ellipse cx="282" cy="330" rx="14" ry="4" fill="#DFA96A" opacity="0.9"/>
+        <ellipse cx="282" cy="362" rx="11" ry="3" fill="#3D2A10" opacity="0.6"/>
+        <!-- Saucer -->
+        <ellipse cx="282" cy="363" rx="16" ry="4" fill="#DFA96A" opacity="0.5"/>
+
+        <!-- Atti & Co text on van side -->
+        <text x="400" y="365" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#DFA96A" opacity="0.85" text-anchor="middle">Atti &amp; Co</text>
+        <text x="400" y="383" font-family="sans-serif" font-size="8" fill="#C17D3C" opacity="0.6" text-anchor="middle" letter-spacing="3">SPECIALTY COFFEE</text>
+
+        <!-- Decorative line on van -->
+        <line x1="80" y1="420" x2="520" y2="420" stroke="#C17D3C" stroke-width="1" opacity="0.2"/>
+
+        <!-- Rear panel detail -->
+        <rect x="390" y="295" width="110" height="110" rx="6" fill="#2A1A08"/>
+        <rect x="395" y="300" width="100" height="100" rx="4" fill="none" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+
+        <!-- Chassis / bottom -->
+        <rect x="80" y="460" width="440" height="20" rx="4" fill="#1A1108"/>
+
+        <!-- WHEELS -->
+        <!-- Front wheel -->
+        <circle cx="165" cy="490" r="48" fill="#1A1108"/>
+        <circle cx="165" cy="490" r="48" stroke="#C17D3C" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <circle cx="165" cy="490" r="34" fill="#2A1A08"/>
+        <circle cx="165" cy="490" r="20" fill="#3D2A10"/>
+        <circle cx="165" cy="490" r="8" fill="#C17D3C" opacity="0.7"/>
+        <!-- Spokes -->
+        <line x1="165" y1="456" x2="165" y2="524" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="131" y1="490" x2="199" y2="490" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="141" y1="466" x2="189" y2="514" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="189" y1="466" x2="141" y2="514" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+
+        <!-- Rear wheel -->
+        <circle cx="415" cy="490" r="48" fill="#1A1108"/>
+        <circle cx="415" cy="490" r="48" stroke="#C17D3C" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <circle cx="415" cy="490" r="34" fill="#2A1A08"/>
+        <circle cx="415" cy="490" r="20" fill="#3D2A10"/>
+        <circle cx="415" cy="490" r="8" fill="#C17D3C" opacity="0.7"/>
+        <line x1="415" y1="456" x2="415" y2="524" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="381" y1="490" x2="449" y2="490" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="391" y1="466" x2="439" y2="514" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+        <line x1="439" y1="466" x2="391" y2="514" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+
+        <!-- Ground shadow -->
+        <ellipse cx="300" cy="542" rx="230" ry="14" fill="#1A1108" opacity="0.4"/>
+
+        <!-- Stars / ambient -->
+        <circle cx="80" cy="180" r="1.5" fill="#DFA96A" opacity="0.4"/>
+        <circle cx="520" cy="220" r="1" fill="#DFA96A" opacity="0.3"/>
+        <circle cx="500" cy="160" r="2" fill="#DFA96A" opacity="0.25"/>
+        <circle cx="120" cy="240" r="1" fill="#DFA96A" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <span class="hero-badge-inner">Award<br/>winning<br/>brew</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Single origin espresso</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Oat · Almond · Soy · Full cream</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Corporate events</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Weddings & private hire</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Markets & festivals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Zero-waste cups</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Single origin espresso</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Oat · Almond · Soy · Full cream</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Corporate events</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Weddings & private hire</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Markets & festivals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Zero-waste cups</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual">
+    <div class="about-pattern"></div>
+    <div class="about-circle">
+      <div class="about-circle-num">7</div>
+      <div class="about-circle-label">Years of craft</div>
+      <div style="width: 40px; height: 1px; background: var(--caramel); margin: 1.2rem auto;"></div>
+      <div class="about-circle-label" style="font-style: italic; color: var(--text-body); font-size: 0.88rem; text-transform: none; letter-spacing: 0;">"Coffee is the pause the world deserves."</div>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <p class="section-tag">Our story</p>
+    <h2 class="section-title">Brewed with<br/><em>intention.</em></h2>
+    <p class="section-body">Atti & Co began as a simple idea: great coffee shouldn't be tied to four walls. Our founder Atticus spent years training under Melbourne's finest roasters before loading up a vintage van and taking the craft to the streets.</p>
+    <p class="section-body">Every cup is made to order, pulled on a commercial La Marzocco, using freshly roasted single-origin beans sourced directly from farmers we know by name.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">120k+</span>
+        <span class="stat-label">Cups served</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48</span>
+        <span class="stat-label">Origin partners</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">300+</span>
+        <span class="stat-label">Events catered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header reveal">
+    <div>
+      <p class="section-tag">Our menu</p>
+      <h2 class="section-title">The daily<br/><em>lineup.</em></h2>
+    </div>
+    <a href="#booking" class="menu-link">Full menu on request</a>
+  </div>
+  <div class="menu-grid reveal">
+    <div class="menu-item">
+      <p class="menu-item-tag">Espresso based</p>
+      <h3 class="menu-item-name"><em>Flat White</em></h3>
+      <p class="menu-item-desc">Double ristretto, silky stretched milk. Our most loved. Simple and completely uncompromising.</p>
+      <span class="menu-item-price">$5.50</span>
+    </div>
+    <div class="menu-item">
+      <p class="menu-item-tag">Espresso based</p>
+      <h3 class="menu-item-name"><em>Long Black</em></h3>
+      <p class="menu-item-desc">Hot water first, double shot poured over. Full crema, full character. Drink it fast.</p>
+      <span class="menu-item-price">$5.00</span>
+    </div>
+    <div class="menu-item">
+      <p class="menu-item-tag">Espresso based</p>
+      <h3 class="menu-item-name"><em>Cortado</em></h3>
+      <p class="menu-item-desc">Equal parts espresso and warm milk. For when you need focus without compromise.</p>
+      <span class="menu-item-price">$5.00</span>
+    </div>
+    <div class="menu-item">
+      <p class="menu-item-tag">Filter</p>
+      <h3 class="menu-item-name"><em>Pour Over</em></h3>
+      <p class="menu-item-desc">Single origin, dialled fresh daily. Light body, elevated aromatics. An honest cup.</p>
+      <span class="menu-item-price">$7.00</span>
+    </div>
+    <div class="menu-item">
+      <p class="menu-item-tag">Cold</p>
+      <h3 class="menu-item-name"><em>Cold Brew</em></h3>
+      <p class="menu-item-desc">18-hour slow steep, naturally sweet. Available straight or over coconut milk.</p>
+      <span class="menu-item-price">$7.50</span>
+    </div>
+    <div class="menu-item">
+      <p class="menu-item-tag">Seasonal</p>
+      <h3 class="menu-item-name"><em>Atti's Special</em></h3>
+      <p class="menu-item-desc">Ask us what's on today. Always something worth trying. Always made with care.</p>
+      <span class="menu-item-price">Market price</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <p class="section-tag">What we do</p>
+    <h2 class="section-title">Coffee that<br/><em>comes to you.</em></h2>
+    <p class="section-body">We set up, serve, pack up and leave your venue exactly as we found it. All you need to worry about is enjoying the coffee.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <h3 class="service-title">Corporate Events</h3>
+      <p class="service-desc">Morning sessions, team days, product launches. We keep your people fuelled and impressed. Setup from 50 to 2,000 guests.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay: 0.1s;">
+      <div class="service-number">02</div>
+      <h3 class="service-title">Weddings & Celebrations</h3>
+      <p class="service-desc">A beautiful van, incredible coffee, and a team who blends into your day seamlessly. Available for pre-ceremony through to reception.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay: 0.2s;">
+      <div class="service-number">03</div>
+      <h3 class="service-title">Markets & Pop-ups</h3>
+      <p class="service-desc">We love a good market. Regular appearances, pop-up partnerships, and festival stints across the region. Get in touch to collaborate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations" id="locations">
+  <div class="reveal">
+    <p class="section-tag">Find us</p>
+    <h2 class="section-title">Our weekly<br/><em>circuit.</em></h2>
+    <p class="section-body">We keep a regular rotation. Follow us on Instagram for real-time updates and surprise locations.</p>
+    <ul class="location-list">
+      <li class="location-item">
+        <span class="location-day">Mon – Fri</span>
+        <div class="location-details">
+          <div class="location-name">Central Business Precinct</div>
+          <div class="location-time">7:00 am – 2:00 pm · Corner of George & Park</div>
+        </div>
+      </li>
+      <li class="location-item">
+        <span class="location-day">Saturday</span>
+        <div class="location-details">
+          <div class="location-name">Riverside Farmers Market</div>
+          <div class="location-time">6:30 am – 1:00 pm · Riverside Esplanade</div>
+        </div>
+      </li>
+      <li class="location-item">
+        <span class="location-day">Sunday</span>
+        <div class="location-details">
+          <div class="location-name">Botanical Gardens</div>
+          <div class="location-time">8:00 am – 12:00 pm · Main entrance gate</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="location-map reveal">
+    <svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <!-- Grid lines -->
+      <g stroke="#C17D3C" stroke-width="0.5" opacity="0.08">
+        <line x1="0" y1="60" x2="380" y2="60"/>
+        <line x1="0" y1="120" x2="380" y2="120"/>
+        <line x1="0" y1="180" x2="380" y2="180"/>
+        <line x1="0" y1="240" x2="380" y2="240"/>
+        <line x1="0" y1="300" x2="380" y2="300"/>
+        <line x1="60" y1="0" x2="60" y2="380"/>
+        <line x1="120" y1="0" x2="120" y2="380"/>
+        <line x1="180" y1="0" x2="180" y2="380"/>
+        <line x1="240" y1="0" x2="240" y2="380"/>
+        <line x1="300" y1="0" x2="300" y2="380"/>
+      </g>
+
+      <!-- Streets suggestion -->
+      <g stroke="#3D2A10" stroke-width="8" stroke-linecap="round" opacity="0.5">
+        <line x1="0" y1="160" x2="380" y2="160"/>
+        <line x1="0" y1="220" x2="380" y2="220"/>
+        <line x1="140" y1="0" x2="140" y2="380"/>
+        <line x1="240" y1="0" x2="240" y2="380"/>
+      </g>
+      <g stroke="#2A1A08" stroke-width="4" stroke-linecap="round" opacity="0.5">
+        <line x1="0" y1="100" x2="380" y2="100"/>
+        <line x1="0" y1="280" x2="380" y2="280"/>
+        <line x1="80" y1="0" x2="80" y2="380"/>
+        <line x1="190" y1="0" x2="190" y2="380"/>
+        <line x1="310" y1="0" x2="310" y2="380"/>
+      </g>
+
+      <!-- River -->
+      <path d="M0 320 Q95 300 190 315 Q285 330 380 310" fill="none" stroke="#C17D3C" stroke-width="12" opacity="0.12" stroke-linecap="round"/>
+
+      <!-- Location dots -->
+      <g class="map-dots">
+        <circle cx="190" cy="160" r="6" fill="#C17D3C" opacity="0.7"/>
+        <circle cx="190" cy="160" r="16" fill="#C17D3C" opacity="0.12"/>
+        <circle cx="100" cy="310" r="6" fill="#DFA96A" opacity="0.7"/>
+        <circle cx="100" cy="310" r="16" fill="#DFA96A" opacity="0.12"/>
+        <circle cx="300" cy="240" r="6" fill="#DFA96A" opacity="0.7"/>
+        <circle cx="300" cy="240" r="16" fill="#DFA96A" opacity="0.12"/>
+      </g>
+
+      <!-- Labels -->
+      <text x="200" y="148" font-family="Georgia, serif" font-style="italic" font-size="10" fill="#DFA96A" opacity="0.8">CBD</text>
+      <text x="110" y="298" font-family="Georgia, serif" font-style="italic" font-size="10" fill="#DFA96A" opacity="0.7">Markets</text>
+      <text x="275" y="230" font-family="Georgia, serif" font-style="italic" font-size="10" fill="#DFA96A" opacity="0.7">Gardens</text>
+
+      <!-- North indicator -->
+      <text x="340" y="36" font-family="sans-serif" font-size="10" fill="#C17D3C" opacity="0.4" text-anchor="middle">N</text>
+      <line x1="340" y1="40" x2="340" y2="55" stroke="#C17D3C" stroke-width="1" opacity="0.3"/>
+      <polygon points="340,40 337,50 343,50" fill="#C17D3C" opacity="0.35"/>
+    </svg>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="reveal">
+    <p class="section-tag">What people say</p>
+    <h2 class="section-title">Heard on<br/><em>the street.</em></h2>
+  </div>
+  <div class="testimonial-grid reveal">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"Honestly the best flat white I've had outside of Tokyo. Atticus knows what he's doing and it shows in every cup."</p>
+      <p class="testimonial-author">Sarah M. — Regular</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"We hired Atti & Co for our company launch event. 300 guests, not a single complaint. The van looked brilliant too."</p>
+      <p class="testimonial-author">Daniel K. — Corporate Client</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"They came to our wedding and it was the most talked-about detail of the whole day. Guests are still messaging us."</p>
+      <p class="testimonial-author">Jess & Tom — Married 2024</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="reveal">
+    <p class="section-tag">Book the van</p>
+    <h2 class="section-title">Let's make<br/><em>something great.</em></h2>
+    <p class="booking-body">Tell us about your event and we'll put together a quote within 24 hours. We cater events of all sizes, anywhere within 150km.</p>
+    <p class="booking-body" style="font-size: 0.85rem;">Or reach us directly: <span style="color: var(--caramel-light);">hello@attiandco.com.au</span></p>
+  </div>
+  <div class="reveal">
+    <div class="booking-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fname">Your name</label>
+          <input type="text" id="fname" placeholder="Atticus">
+        </div>
+        <div class="form-field">
+          <label for="femail">Email</label>
+          <input type="email" id="femail" placeholder="hello@you.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fdate">Event date</label>
+          <input type="date" id="fdate">
+        </div>
+        <div class="form-field">
+          <label for="ftype">Event type</label>
+          <select id="ftype">
+            <option value="">Select…</option>
+            <option>Corporate event</option>
+            <option>Wedding</option>
+            <option>Market / Festival</option>
+            <option>Private party</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="fguests">Expected guests</label>
+        <input type="number" id="fguests" placeholder="e.g. 150">
+      </div>
+      <div class="form-field">
+        <label for="fmessage">Anything else we should know?</label>
+        <textarea id="fmessage" placeholder="Venue, timing, special requests…"></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(event)">Send enquiry →</button>
+      <div id="form-success" style="display:none; color:#DFA96A; font-size:0.9rem; margin-top:0.5rem; font-style:italic;">Thanks! We'll be in touch within 24 hours ☕</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Atti & Co</div>
+      <p class="footer-brand-desc">Specialty coffee on wheels. Sourced with care, pulled with precision, served with love.</p>
+    </div>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <ul class="footer-links">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#locations">Find Us</a></li>
+        <li><a href="#booking">Book the Van</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Services</p>
+      <ul class="footer-links">
+        <li><a href="#booking">Corporate Events</a></li>
+        <li><a href="#booking">Weddings</a></li>
+        <li><a href="#booking">Markets</a></li>
+        <li><a href="#booking">Private Hire</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ul class="footer-links">
+        <li><a href="mailto:hello@attiandco.com.au">hello@attiandco.com.au</a></li>
+        <li><a href="tel:+61400000000">+61 400 000 000</a></li>
+        <li><a href="#">@attiandco</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Atti & Co. All rights reserved. ABN XX XXX XXX XXX</p>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>
